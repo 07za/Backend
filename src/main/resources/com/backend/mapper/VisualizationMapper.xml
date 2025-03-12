@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.backend.mapper.VisualizationMapper">
+
+    <select id="list" resultType="com.backend.dto.VisualizationDTO">
+        SELECT
+            DATE_FORMAT(delivery_date, '%Y-%m') AS dateMonth,
+            SUM(order_amount) AS totalSales,
+            SUM(CASE WHEN audit_status = '1' THEN order_amount ELSE 0 END) AS totalContract
+        FROM sale_order
+        GROUP BY DATE_FORMAT(delivery_date, '%Y-%m')
+        ORDER BY DATE_FORMAT(delivery_date, '%Y-%m');
+    </select>
+
+</mapper>
