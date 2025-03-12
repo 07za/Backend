@@ -11,4 +11,5 @@ public class MesMaterialCheckListDTO {
     private String materialName;    // 物料名称
     private String materialRequisitionNo;  // 领料单号
     private String serialNo;        // 流水号
+    private String checkResult;     // 检验结果
 } 

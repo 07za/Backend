@@ -1,5 +1,6 @@
 package com.backend.enums;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.Getter;
 
@@ -8,7 +9,6 @@ public enum CheckResultEnum {
     UNQUALIFIED("0", "不合格"),
     QUALIFIED("1", "合格");
 
-    @Getter
     private final String code;
     private final String description;
 
@@ -18,14 +18,34 @@ public enum CheckResultEnum {
     }
 
     @JsonValue
+    public String getCode() {
+        return code;
+    }
+
     public String getDescription() {
         return description;
     }
 
+    @JsonCreator
+    public static CheckResultEnum fromString(String value) {
+        if (value == null || value.trim().isEmpty()) {
+            return null;
+        }
+        for (CheckResultEnum result : CheckResultEnum.values()) {
+            if (result.getCode().equals(value) || result.getDescription().equals(value)) {
+                return result;
+            }
+        }
+        return null;
+    }
+
     public static CheckResultEnum getByCode(String code) {
-        for (CheckResultEnum value : CheckResultEnum.values()) {
-            if (value.getCode().equals(code)) {
-                return value;
+        if (code == null) {
+            return null;
+        }
+        for (CheckResultEnum result : CheckResultEnum.values()) {
+            if (result.getCode().equals(code)) {
+                return result;
             }
         }
         return null;
