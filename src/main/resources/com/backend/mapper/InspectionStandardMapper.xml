@@ -4,5 +4,21 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.backend.mapper.InspectionStandardMapper">
-
+    <select id="list" resultType="com.backend.pojo.InspectionStandard">
+        SELECT 
+            id,
+            checkDate,
+            checkItemName,
+            checkQuantity,
+            checkResult,
+            checkStandardId,
+            checkUser,
+            checkValue,
+            materialBatchNo,
+            `maxValue`,
+            `minValue`,
+            createTime,
+            updateTime
+        FROM inspectionstandard
+    </select>
 </mapper>
