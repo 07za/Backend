@@ -18,15 +18,28 @@
     </delete>
 
     <select id="list" resultType="com.backend.pojo.ProductFinish">
-        select * from mesproductfinish
+        SELECT * FROM mesproductfinish
         <where>
-            <if test="batchNo!=null">batchNo=#{batchNo}</if>
-            <if test="finishDateStart!=null and finishDateEnd!=null">finishDate between #{finishDateStart} and #{finishDateEnd}</if>
-            <if test="jobId!=null">jobId=#{jobId}</if>
-            <if test="materialId!=null">materialId=#{materialId}</if>
-            <if test="planId!=null">planId=#{planId}</if>
-            <if test="status!=null">status=#{status}</if>
+            <if test="batchNo!=null">
+                batchNo = #{batchNo}
+            </if>
+            <if test="finishDateStart!=null and finishDateEnd!=null">
+                AND finishDate BETWEEN #{finishDateStart} AND #{finishDateEnd}
+            </if>
+            <if test="jobId!=null">
+                AND jobId = #{jobId}
+            </if>
+            <if test="materialId!=null">
+                AND materialId = #{materialId}
+            </if>
+            <if test="planId!=null">
+                AND planId = #{planId}
+            </if>
+            <if test="status!=null">
+                AND `status` = #{status}
+            </if>
         </where>
+        ORDER BY finishDate DESC
     </select>
 
     <select id="getById" resultType="com.backend.pojo.ProductFinish">

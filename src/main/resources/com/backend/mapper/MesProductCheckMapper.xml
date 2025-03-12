@@ -18,20 +18,43 @@
     </delete>
 
     <select id="list" resultType="com.backend.pojo.MesProductCheck">
-        select * from mesproductcheck
+        SELECT * FROM mesproductcheck
         <where>
-            <if test="checkDateStart!=null and checkDateEnd!=null">checkDate between #{checkDateStart} and #{checkDateEnd}</if>
-            <if test="checkItemName!=null">checkItemName like concat('%',#{checkItemName},'%')</if>
-            <if test="checkResult!=null">checkResult=#{checkResult}</if>
-            <if test="checkUser!=null">checkUser like concat('%',#{checkUser},'%')</if>
-            <if test="productDateStart!=null and productDateStart!=null ">productDate between #{productDateStart} and #{productDateEnd}</if>
-            <if test="productFinishNo!=null">productFinishNo like concat('%',#{productFinishNo},'%')</if>
-            <if test="productJobName!=null">productJobName like concat('%',#{productJobName},'%')</if>
-            <if test="productPlanNo!=null">productPlanNo like concat('%',#{productPlanNo},'%')</if>
-            <if test="serialNo!=null">serialNo like concat('%',#{serialNo},'%')</if>
-            <if test="materialName!=null">materialName like concat('%',#{materialName},'%')</if>
-            <if test="materialBatchNo!=null">materialBatchNo like concat('%',#{materialBatchNo},'%')</if>
+            <if test="checkDateStart!=null and checkDateEnd!=null">
+                checkDate BETWEEN #{checkDateStart} AND #{checkDateEnd}
+            </if>
+            <if test="checkItemName!=null">
+                AND checkItemName LIKE CONCAT('%',#{checkItemName},'%')
+            </if>
+            <if test="checkResult!=null">
+                AND checkResult = #{checkResult}
+            </if>
+            <if test="checkUser!=null">
+                AND checkUser LIKE CONCAT('%',#{checkUser},'%')
+            </if>
+            <if test="productDateStart!=null and productDateEnd!=null">
+                AND productDate BETWEEN #{productDateStart} AND #{productDateEnd}
+            </if>
+            <if test="productFinishNo!=null">
+                AND productFinishNo LIKE CONCAT('%',#{productFinishNo},'%')
+            </if>
+            <if test="productJobName!=null">
+                AND productJobName LIKE CONCAT('%',#{productJobName},'%')
+            </if>
+            <if test="productPlanNo!=null">
+                AND productPlanNo LIKE CONCAT('%',#{productPlanNo},'%')
+            </if>
+            <if test="serialNo!=null">
+                AND serialNo LIKE CONCAT('%',#{serialNo},'%')
+            </if>
+            <if test="materialName!=null">
+                AND materialName LIKE CONCAT('%',#{materialName},'%')
+            </if>
+            <if test="materialBatchNo!=null">
+                AND materialBatchNo LIKE CONCAT('%',#{materialBatchNo},'%')
+            </if>
         </where>
+        ORDER BY checkDate DESC
     </select>
     <select id="getByID" resultType="com.backend.pojo.MesProductCheck">
         select * from mesproductcheck where id=#{id}

@@ -29,19 +29,19 @@ public class MesMaterialCheckController {
     }
 
     @PostMapping
-    public Result<String> add(@RequestBody MesMaterialCheck mesMaterialCheck) {
+    public Result add(@RequestBody MesMaterialCheck mesMaterialCheck) {
         mesMaterialCheckService.add(mesMaterialCheck);
         return Result.success();
     }
 
     @PutMapping
-    public Result<String> update(@RequestBody MesMaterialCheck mesMaterialCheck) {
+    public Result update(@RequestBody MesMaterialCheck mesMaterialCheck) {
         mesMaterialCheckService.update(mesMaterialCheck);
         return Result.success();
     }
 
     @DeleteMapping("/{id}")
-    public Result<String> delete(@PathVariable String id) {
+    public Result delete(@PathVariable String id) {
         mesMaterialCheckService.delete(id);
         return Result.success();
     }
