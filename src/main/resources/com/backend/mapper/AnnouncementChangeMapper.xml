@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.backend.mapper.AnnouncementChangeMapper">
+    <resultMap id="AnnouncementChangesMap" type="com.backend.pojo.AnnouncementChanges">
+        <id column="id" property="id"/>
+        <result column="title" property="title"/>
+        <result column="publisher" property="publisher"/>
+        <result column="publish_date" property="publishDate"/>
+        <result column="view_count" property="viewCount"/>
+        <result column="content" property="content"/>
+    </resultMap>
+
+    <select id="list" resultMap="AnnouncementChangesMap">
+        SELECT * FROM announcement_changes
+        <where>
+            <if test="title != null and title != ''">
+                title LIKE CONCAT('%', #{title}, '%')
+            </if>
+        </where>
+        ORDER BY publish_date DESC
+    </select>
+
+    <select id="getById" resultMap="AnnouncementChangesMap">
+        SELECT * FROM announcement_changes WHERE id = #{id}
+    </select>
+
+    <update id="incrementViewCount">
+        UPDATE announcement_changes SET view_count = view_count + 1 WHERE id = #{id}
+    </update>
+</mapper> 
