@@ -3,7 +3,7 @@ package com.backend.pojo;
 import lombok.Data;
 
 @Data
-public class productFinish {
+public class ProductFinish {
     private Long id;
     private String batchNo;
     private String createBy;
