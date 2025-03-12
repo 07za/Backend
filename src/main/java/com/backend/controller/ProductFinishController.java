@@ -5,10 +5,7 @@ import com.backend.pojo.Result;
 import com.backend.pojo.ProductFinish;
 import com.backend.service.ProductFinishService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -17,11 +14,35 @@ import java.util.List;
 public class ProductFinishController {
 
     @Autowired
-    ProductFinishService productFinishService;
+    private ProductFinishService productFinishService;
 
-    @GetMapping("/list ")
+    @GetMapping("/list")
     public Result<List<ProductFinish>> list(@ModelAttribute ProductFinishListDTO productFinishListDTO) {
         List<ProductFinish> list = productFinishService.list(productFinishListDTO);
         return Result.success(list);
+    }
+
+    @GetMapping("/{id}")
+    public Result<ProductFinish> getById(@PathVariable Long id) {
+        ProductFinish productFinish = productFinishService.getById(id);
+        return Result.success(productFinish);
+    }
+
+    @PostMapping
+    public Result add(@RequestBody ProductFinish productFinish) {
+        productFinishService.add(productFinish);
+        return Result.success();
+    }
+
+    @PutMapping
+    public Result update(@RequestBody ProductFinish productFinish) {
+        productFinishService.update(productFinish);
+        return Result.success();
+    }
+
+    @DeleteMapping("/{id}")
+    public Result delete(@PathVariable Long id){
+        productFinishService.delete(id);
+        return Result.success();
     }
 }

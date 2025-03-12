@@ -3,6 +3,7 @@ package com.backend.pojo;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import java.util.Date;
+import com.backend.enums.CheckResultEnum;
 
 @Data
 public class MesProductCheck {
@@ -16,7 +17,7 @@ public class MesProductCheck {
 
     private Double checkQuantity; // 抽检数量
 
-    private String checkResult; // 检验结果：0不合格，1合格
+    private CheckResultEnum checkResult; // 检验结果：0不合格，1合格
 
     private Long checkStandardId; // 检验标准编号
 
