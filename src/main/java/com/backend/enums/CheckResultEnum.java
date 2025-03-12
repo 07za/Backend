@@ -8,6 +8,7 @@ public enum CheckResultEnum {
     UNQUALIFIED("0", "不合格"),
     QUALIFIED("1", "合格");
 
+    @Getter
     private final String code;
     private final String description;
 
@@ -17,8 +18,8 @@ public enum CheckResultEnum {
     }
 
     @JsonValue
-    public String getCode() {
-        return code;
+    public String getDescription() {
+        return description;
     }
 
     public static CheckResultEnum getByCode(String code) {

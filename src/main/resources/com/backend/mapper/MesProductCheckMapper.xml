@@ -17,7 +17,7 @@
         delete from mesproductcheck where id=#{id}
     </delete>
 
-    <select id="list">
+    <select id="list" resultType="com.backend.pojo.MesProductCheck">
         select * from mesproductcheck
         <where>
             <if test="checkDateStart!=null and checkDateEnd!=null">checkDate between #{checkDateStart} and #{checkDateEnd}</if>
@@ -33,7 +33,7 @@
             <if test="materialBatchNo!=null">materialBatchNo like concat('%',#{materialBatchNo},'%')</if>
         </where>
     </select>
-    <select id="getByID">
+    <select id="getByID" resultType="com.backend.pojo.MesProductCheck">
         select * from mesproductcheck where id=#{id}
     </select>
 </mapper>
