@@ -23,7 +23,7 @@
                 AND serialNo LIKE CONCAT('%',#{serialNo},'%')
             </if>
         </where>
-        ORDER BY checkDate DESC
+#         ORDER BY checkDate DESC
     </select>
 
     <select id="getByID" resultType="com.backend.pojo.MesMaterialCheck">

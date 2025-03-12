@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/mesMaterialCheck")
+@RequestMapping("/mesCheck/materialCheck")
 public class MesMaterialCheckController {
 
     @Autowired

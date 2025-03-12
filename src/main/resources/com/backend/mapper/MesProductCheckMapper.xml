@@ -54,7 +54,7 @@
                 AND materialBatchNo LIKE CONCAT('%',#{materialBatchNo},'%')
             </if>
         </where>
-        ORDER BY checkDate DESC
+#         ORDER BY checkDate DESC
     </select>
     <select id="getByID" resultType="com.backend.pojo.MesProductCheck">
         select * from mesproductcheck where id=#{id}

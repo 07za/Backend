@@ -39,7 +39,7 @@
                 AND `status` = #{status}
             </if>
         </where>
-        ORDER BY finishDate DESC
+#         ORDER BY finishDate DESC
     </select>
 
     <select id="getById" resultType="com.backend.pojo.ProductFinish">
