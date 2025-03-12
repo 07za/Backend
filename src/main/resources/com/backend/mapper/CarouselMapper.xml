@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.backend.mapper.CarouselMapper">
+    <resultMap id="CarouselMap" type="com.backend.pojo.Carousel">
+        <id column="id" property="id"/>
+        <result column="image_url" property="imageUrl"/>
+        <result column="remark" property="remark"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+    </resultMap>
+
+    <select id="list" resultMap="CarouselMap">
+        SELECT * FROM carousel ORDER BY create_time DESC
+    </select>
+
+    <select id="getById" resultMap="CarouselMap">
+        SELECT * FROM carousel WHERE id = #{id}
+    </select>
+
+    <insert id="add">
+        INSERT INTO carousel(image_url, remark)
+        VALUES(#{imageUrl}, #{remark})
+    </insert>
+
+    <update id="update">
+        UPDATE carousel
+        SET image_url = #{imageUrl},
+            remark = #{remark}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="delete">
+        DELETE FROM carousel WHERE id = #{id}
+    </delete>
+</mapper> 
