@@ -1,12 +1,14 @@
 package com.backend.pojo;
 
 import com.backend.enums.CheckResultEnum;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import java.util.Date;
 
 @Data
 public class InspectionStandard {
     private Long id; // 主键ID
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date checkDate; // 检验时间
     private String checkItemName; // 检验项
     private Double checkQuantity; // 抽检数量

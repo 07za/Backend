@@ -1,11 +1,13 @@
 package com.backend.pojo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import java.util.Date;
 
 @Data
 public class MesMaterialCheck {
     private Long id; // 编号（主键）
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date checkDate; // 检验时间
     private String checkItemName; // 检验项
     private Double checkQuantity; // 抽检数量

@@ -8,7 +8,7 @@
         SELECT * FROM mesmaterialcheck
         <where>
             <if test="checkDateStart!=null and checkDateEnd!=null">
-                checkDate BETWEEN #{checkDateStart} AND #{checkDateEnd}
+                checkDate BETWEEN #{checkDateStart} AND DATE_ADD(#{checkDateEnd}, INTERVAL '23:59:59' HOUR_SECOND)
             </if>
             <if test="checkUser!=null">
                 AND checkUser LIKE CONCAT('%',#{checkUser},'%')

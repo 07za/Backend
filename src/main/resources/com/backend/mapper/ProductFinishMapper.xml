@@ -24,7 +24,7 @@
                 batchNo = #{batchNo}
             </if>
             <if test="finishDateStart!=null and finishDateEnd!=null">
-                AND finishDate BETWEEN #{finishDateStart} AND #{finishDateEnd}
+                AND finishDate BETWEEN #{finishDateStart} AND DATE_ADD(#{finishDateEnd}, INTERVAL '23:59:59' HOUR_SECOND)
             </if>
             <if test="jobId!=null">
                 AND jobId = #{jobId}
