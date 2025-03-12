@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.backend.mapper.MesMaterialCheckMapper">
+    <select id="list" resultType="com.backend.pojo.MesMaterialCheck">
+        SELECT * FROM mesmaterialcheck
+        <where>
+            <if test="checkDateStart!=null and checkDateEnd!=null">
+                checkDate BETWEEN #{checkDateStart} AND #{checkDateEnd}
+            </if>
+            <if test="checkUser!=null">
+                AND checkUser LIKE CONCAT('%',#{checkUser},'%')
+            </if>
+            <if test="materialName!=null">
+                AND materialName LIKE CONCAT('%',#{materialName},'%')
+            </if>
+            <if test="materialRequisitionNo!=null">
+                AND materialRequisitionNo LIKE CONCAT('%',#{materialRequisitionNo},'%')
+            </if>
+            <if test="serialNo!=null">
+                AND serialNo LIKE CONCAT('%',#{serialNo},'%')
+            </if>
+        </where>
+        ORDER BY checkDate DESC
+    </select>
+
+    <select id="getByID" resultType="com.backend.pojo.MesMaterialCheck">
+        SELECT * FROM mesmaterialcheck WHERE id=#{id}
+    </select>
+
+    <insert id="add">
+        INSERT INTO mesmaterialcheck(
+            checkDate,checkItemName,checkQuantity,checkResult,checkStandardId,
+            checkUser,checkValue,createBy,materialCode,materialId,materialModel,
+            materialName,materialRequisitionId,materialRequisitionNo,materialSpecification,
+            materialUnit,`maxValue`,`minValue`,receiveQuantity,requireQuantity,
+            serialNo,remark,updateBy,updateTime
+        ) VALUES(
+            #{checkDate},#{checkItemName},#{checkQuantity},#{checkResult},#{checkStandardId},
+            #{checkUser},#{checkValue},#{createBy},#{materialCode},#{materialId},#{materialModel},
+            #{materialName},#{materialRequisitionId},#{materialRequisitionNo},#{materialSpecification},
+            #{materialUnit},#{maxValue},#{minValue},#{receiveQuantity},#{requireQuantity},
+            #{serialNo},#{remark},#{updateBy},now()
+        )
+    </insert>
+
+    <update id="update">
+        UPDATE mesmaterialcheck
+        SET 
+            checkDate=#{checkDate},
+            checkItemName=#{checkItemName},
+            checkQuantity=#{checkQuantity},
+            checkResult=#{checkResult},
+            checkStandardId=#{checkStandardId},
+            checkUser=#{checkUser},
+            checkValue=#{checkValue},
+            createBy=#{createBy},
+            materialCode=#{materialCode},
+            materialId=#{materialId},
+            materialModel=#{materialModel},
+            materialName=#{materialName},
+            materialRequisitionId=#{materialRequisitionId},
+            materialRequisitionNo=#{materialRequisitionNo},
+            materialSpecification=#{materialSpecification},
+            materialUnit=#{materialUnit},
+            `maxValue`=#{maxValue},
+            `minValue`=#{minValue},
+            receiveQuantity=#{receiveQuantity},
+            requireQuantity=#{requireQuantity},
+            serialNo=#{serialNo},
+            remark=#{remark},
+            updateBy=#{updateBy},
+            updateTime=now()
+        WHERE id=#{id}
+    </update>
+
+    <delete id="delete">
+        DELETE FROM mesmaterialcheck WHERE id=#{id}
+    </delete>
+</mapper> 
