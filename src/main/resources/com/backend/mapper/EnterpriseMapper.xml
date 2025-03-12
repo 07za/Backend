@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.backend.mapper.EnterpriseMapper">
+    <update id="update" parameterType="com.backend.pojo.Enterprise">
+        UPDATE enterprise
+        <set>
+            <if test="logo != null and logo != ''">logo = #{logo},</if>
+            <if test="businessLicense != null and businessLicense != ''">businessLicense = #{businessLicense},</if>
+            <if test="name != null and name != ''">name = #{name},</if>
+            <if test="creditCode != null and creditCode != ''">creditCode = #{creditCode},</if>
+            <if test="registeredAddress != null and registeredAddress != ''">registeredAddress = #{registeredAddress},</if>
+            <if test="registeredCapital != null">registeredCapital = #{registeredCapital},</if>
+            <if test="enterpriseType != null and enterpriseType != ''">enterpriseType = #{enterpriseType},</if>
+            <if test="establishmentDate != null">establishmentDate = #{establishmentDate},</if>
+            <if test="legalRepresentative != null and legalRepresentative != ''">legalRepresentative = #{legalRepresentative},</if>
+            <if test="legalRepresentativeIdCard != null and legalRepresentativeIdCard != ''">legalRepresentativeIdCard = #{legalRepresentativeIdCard},</if>
+            <if test="legalRepresentativeIdCardScan != null and legalRepresentativeIdCardScan != ''">legalRepresentativeIdCardScan = #{legalRepresentativeIdCardScan},</if>
+            <if test="businessLicenseValidity != null">businessLicenseValidity = #{businessLicenseValidity},</if>
+            <if test="businessScope != null and businessScope != ''">businessScope = #{businessScope},</if>
+            <if test="contactPhone != null and contactPhone != ''">contactPhone = #{contactPhone},</if>
+            <if test="accountLicenseScan != null and accountLicenseScan != ''">accountLicenseScan = #{accountLicenseScan},</if>
+            <if test="bankName != null and bankName != ''">bankName = #{bankName},</if>
+            <if test="bankAccount != null and bankAccount != ''">bankAccount = #{bankAccount},</if>
+            <if test="bankAddress != null and bankAddress != ''">bankAddress = #{bankAddress},</if>
+        </set>
+        WHERE id = #{id}
+    </update>
+
+
+    <select id="list" resultType="com.backend.pojo.Enterprise">
+        select * from enterprise
+    </select>
+
+    <update id="updateAuditStatus" parameterType="java.lang.Integer">
+        UPDATE enterprise
+        SET auditStatus = '通过'
+        WHERE id = #{id}
+    </update>
+
+
+
+</mapper>
