@@ -7,4 +7,12 @@ import java.util.List;
 
 public interface ProductFinishService {
     List<ProductFinish> list(ProductFinishListDTO productFinishListDTO);
+
+    ProductFinish getById(Long id);
+
+    void add(ProductFinish productFinish);
+
+    void update(ProductFinish productFinish);
+
+    void delete(Long id);
 }

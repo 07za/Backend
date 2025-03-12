@@ -4,5 +4,32 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.backend.mapper.ProductFinishMapper">
+    <insert id="add">
+        insert into mesproductfinish(batchNo, createBy, finishDate, finishQuantity, jobId, jobName, materialCode, materialId, materialModel, materialName, materialSpecification, materialUnit, planId, planName, planNo, remark, scheduleId, serialNo, status, updateBy, updateTime)
+        VALUE(#{batchNo},#{createBy},#{finishDate},#{finishQuantity},#{jobId},#{jobName},#{materialCode},#{materialId},#{materialModel},#{materialName},#{materialSpecification},#{materialUnit},#{planId},#{planName},#{planNo},#{remark},#{scheduleId},#{serialNo},#{status},#{updateBy},now())
+    </insert>
+    <update id="update">
+        update mesproductfinish set batchNo=#{batchNo}, createBy=#{createBy}, finishDate=#{finishDate}, finishQuantity=#{finishQuantity}, jobId=#{jobId}, jobName=#{jobName}, materialCode=#{materialCode}, materialId=#{materialId}, materialModel=#{materialModel},
+                                    materialName=#{materialName}, materialSpecification=#{materialSpecification}, materialUnit=#{materialUnit}, planId=#{planId}, planName=#{planName}, planNo=#{planNo}, remark=#{remark}, scheduleId=#{scheduleId}, serialNo=#{serialNo},
+                                    status=#{status}, updateBy=#{updateBy}, updateTime=now() where id=#{id}
+    </update>
+    <delete id="delete">
+        delete from mesproductfinish where id=#{id}
+    </delete>
 
+    <select id="list" resultType="com.backend.pojo.ProductFinish">
+        select * from mesproductfinish
+        <where>
+            <if test="batchNo!=null">batchNo=#{batchNo}</if>
+            <if test="finishDateStart!=null and finishDateEnd!=null">finishDate between #{finishDateStart} and #{finishDateEnd}</if>
+            <if test="jobId!=null">jobId=#{jobId}</if>
+            <if test="materialId!=null">materialId=#{materialId}</if>
+            <if test="planId!=null">planId=#{planId}</if>
+            <if test="status!=null">status=#{status}</if>
+        </where>
+    </select>
+
+    <select id="getById" resultType="com.backend.pojo.ProductFinish">
+        select * from mesproductfinish where id=#{id}
+    </select>
 </mapper>

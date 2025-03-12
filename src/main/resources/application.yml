@@ -6,8 +6,10 @@ spring:
     password: 123456
 
 mybatis:
+  type-handlers-package: com.backend.handler
   configuration:
     map-underscore-to-camel-case: true
+    default-enum-type-handler: com.backend.handler.CheckResultEnumTypeHandler
 
 server:
   port: 8000
