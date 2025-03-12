@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.backend.mapper.MesProductCheckMapper">
+    <insert id="add">
+        insert into mesproductcheck(checkDate, checkItemName, checkQuantity, checkResult, checkStandardId, checkUser, checkValue, createBy, materialBatchNo, materialCode, materialId, materialModel, materialName, materialSpecification, materialUnit, `maxValue`, `minValue`, productDate, productFinishId, productFinishNo, productJobId, productJobName, productLineId, productLineName, productPlanId, productPlanNo, productQuantity, productScheduleId, qualifiedRate, remark, searchValue, serialNo, updateBy, updateTime, params)
+        VALUE(#{checkDate},#{checkItemName},#{checkQuantity},#{checkResult},#{checkStandardId},#{checkUser},#{checkValue},#{createBy},#{materialBatchNo},#{materialCode},#{materialId},#{materialModel},#{materialName},#{materialSpecification},#{materialUnit},#{maxValue},#{minValue},#{productDate},#{productFinishId},#{productFinishNo},#{productJobId},#{productJobName},#{productLineId},#{productLineName},#{productPlanId},#{productPlanNo},#{productQuantity},#{productScheduleId},#{qualifiedRate},#{remark},#{searchValue},#{serialNo},#{updateBy},now(),#{params})
+    </insert>
+    <update id="update">
+        update mesproductcheck set checkDate=#{checkDate}, checkItemName=#{checkItemName}, checkQuantity=#{checkQuantity}, checkResult=#{checkResult}, checkStandardId=#{checkStandardId}, checkUser=#{checkUser}, checkValue=#{checkValue}, createBy=#{createBy}, materialBatchNo=#{materialBatchNo}, materialCode=#{materialCode}, materialId=#{materialId}, materialModel=#{materialModel}, materialName=#{materialName}, materialSpecification=#{materialSpecification}, materialUnit=#{materialUnit}, `maxValue`=#{maxValue}, `minValue`=#{minValue}, productDate=#{productDate},
+                                    productFinishId=#{productFinishId}, productFinishNo=#{productFinishNo}, productJobId=#{productJobId}, productJobName=#{productJobName}, productLineId=#{productLineId}, productLineName=#{productLineName}, productPlanId=#{productPlanId}, productPlanNo=#{productPlanNo}, productQuantity=#{productQuantity}, productScheduleId=#{productScheduleId}, qualifiedRate=#{qualifiedRate}, remark=#{remark}, searchValue=#{searchValue}, serialNo=#{serialNo}, updateBy=#{updateBy}, updateTime=now()
+        where id=#{id}
+    </update>
+    <delete id="delete">
+        delete from mesproductcheck where id=#{id}
+    </delete>
+
+    <select id="list" resultType="com.backend.pojo.MesProductCheck">
+        select * from mesproductcheck
+        <where>
+            <if test="checkDateStart!=null and checkDateEnd!=null">checkDate between #{checkDateStart} and #{checkDateEnd}</if>
+            <if test="checkItemName!=null">checkItemName like concat('%',#{checkItemName},'%')</if>
+            <if test="checkResult!=null">checkResult=#{checkResult}</if>
+            <if test="checkUser!=null">checkUser like concat('%',#{checkUser},'%')</if>
+            <if test="productDateStart!=null and productDateStart!=null ">productDate between #{productDateStart} and #{productDateEnd}</if>
+            <if test="productFinishNo!=null">productFinishNo like concat('%',#{productFinishNo},'%')</if>
+            <if test="productJobName!=null">productJobName like concat('%',#{productJobName},'%')</if>
+            <if test="productPlanNo!=null">productPlanNo like concat('%',#{productPlanNo},'%')</if>
+            <if test="serialNo!=null">serialNo like concat('%',#{serialNo},'%')</if>
+            <if test="materialName!=null">materialName like concat('%',#{materialName},'%')</if>
+            <if test="materialBatchNo!=null">materialBatchNo like concat('%',#{materialBatchNo},'%')</if>
+        </where>
+    </select>
+    <select id="getByID" resultType="com.backend.pojo.MesProductCheck">
+        select * from mesproductcheck where id=#{id}
+    </select>
+</mapper>
