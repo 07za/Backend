@@ -21,7 +21,7 @@ public class ProductFinish {
     private String planName;
     private String planNo;
     private String remark;
-    private String scheduleId;
+    private Integer scheduleId;
     private String serialNo;
     private String status;
     private String updateBy;

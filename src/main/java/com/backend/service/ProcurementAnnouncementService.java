@@ -10,7 +10,7 @@ public interface ProcurementAnnouncementService {
     
     void add(ProcurementAnnouncement procurementAnnouncement, MultipartFile file);
     
-    void update(ProcurementAnnouncement procurementAnnouncement, MultipartFile file);
+    boolean update(ProcurementAnnouncement procurementAnnouncement, MultipartFile file);
     
     void delete(Integer id);
     

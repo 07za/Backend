@@ -39,8 +39,12 @@ public class ProcurementAnnouncementController {
     @PutMapping
     public Result update(@RequestParam(value = "file", required = false) MultipartFile file,
                         ProcurementAnnouncement procurementAnnouncement) {
-        procurementAnnouncementService.update(procurementAnnouncement, file);
-        return Result.success();
+        boolean transferred = procurementAnnouncementService.update(procurementAnnouncement, file);
+        if (transferred) {
+            return Result.success("已转移至参标项目");
+        } else {
+            return Result.success("更新成功");
+        }
     }
     
     @DeleteMapping("/{id}")

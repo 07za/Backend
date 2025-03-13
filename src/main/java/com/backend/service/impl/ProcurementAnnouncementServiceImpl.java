@@ -2,12 +2,15 @@ package com.backend.service.impl;
 
 import com.backend.dto.ProcurementAnnouncementDTO;
 import com.backend.mapper.ProcurementAnnouncementMapper;
+import com.backend.mapper.BiddingProjectMapper;
 import com.backend.pojo.ProcurementAnnouncement;
+import com.backend.pojo.BiddingProject;
 import com.backend.service.ProcurementAnnouncementService;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -21,6 +24,9 @@ public class ProcurementAnnouncementServiceImpl implements ProcurementAnnounceme
     
     @Autowired
     private ProcurementAnnouncementMapper procurementAnnouncementMapper;
+    
+    @Autowired
+    private BiddingProjectMapper biddingProjectMapper;
     
     private static final String FILE_PATH = "files/procurement/";
     
@@ -39,7 +45,8 @@ public class ProcurementAnnouncementServiceImpl implements ProcurementAnnounceme
     }
     
     @Override
-    public void update(ProcurementAnnouncement procurementAnnouncement, MultipartFile file) {
+    @Transactional
+    public boolean update(ProcurementAnnouncement procurementAnnouncement, MultipartFile file) {
         if (file != null && !file.isEmpty()) {
             // 删除旧文件
             ProcurementAnnouncement oldAnnouncement = procurementAnnouncementMapper.getById(procurementAnnouncement.getId());
@@ -51,7 +58,61 @@ public class ProcurementAnnouncementServiceImpl implements ProcurementAnnounceme
             String fileUrl = saveFile(file);
             procurementAnnouncement.setFileUrl(fileUrl);
         }
-        procurementAnnouncementMapper.update(procurementAnnouncement);
+        
+        // 检查是否需要转移到参标项目表
+        if ("已报名".equals(procurementAnnouncement.getRegistrationStatus())) {
+            // 获取完整的公告信息，确保所有字段都有值
+            ProcurementAnnouncement fullAnnouncement = procurementAnnouncementMapper.getById(procurementAnnouncement.getId());
+            if (fullAnnouncement == null) {
+                fullAnnouncement = procurementAnnouncement;
+            }
+            
+            // 添加到参标项目表
+            BiddingProject biddingProject = new BiddingProject();
+            
+            // 设置参标项目的基本信息
+            biddingProject.setBiddingStatus("未投标");
+            biddingProject.setBiddingName(fullAnnouncement.getBiddingName());
+            biddingProject.setBidResult("未开标");
+            biddingProject.setBiddingEndTime(fullAnnouncement.getBiddingEndTime());
+            biddingProject.setRegistrationStatus(fullAnnouncement.getRegistrationStatus());
+            biddingProject.setBiddingProgress("未开始");
+            biddingProject.setProjectTitle(fullAnnouncement.getTitle());
+            biddingProject.setPublishTime(fullAnnouncement.getPublishTime());
+            biddingProject.setPublishEnterprise(fullAnnouncement.getPublisher());
+            biddingProject.setProjectSummary(fullAnnouncement.getContent());
+            
+            // 如果有招标内容，也一并转移
+            if (fullAnnouncement.getBiddingContent() != null && !fullAnnouncement.getBiddingContent().isEmpty()) {
+                // 将招标内容添加到项目简介中
+                String summary = biddingProject.getProjectSummary();
+                if (summary == null) {
+                    summary = "";
+                }
+                if (!summary.isEmpty()) {
+                    summary += "\n\n";
+                }
+                summary += "招标内容：\n" + fullAnnouncement.getBiddingContent();
+                biddingProject.setProjectSummary(summary);
+            }
+            
+            // 如果有文件，也一并转移
+            if (fullAnnouncement.getFileUrl() != null && !fullAnnouncement.getFileUrl().isEmpty()) {
+                biddingProject.setFileUrl(fullAnnouncement.getFileUrl());
+            }
+            
+            // 添加到参标项目表
+            biddingProjectMapper.add(biddingProject);
+            
+            // 从采购公告表中删除
+            procurementAnnouncementMapper.delete(procurementAnnouncement.getId());
+            
+            return true;
+        } else {
+            // 正常更新
+            procurementAnnouncementMapper.update(procurementAnnouncement);
+            return false;
+        }
     }
     
     @Override
