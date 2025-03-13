@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.backend.mapper.ProcurementAnnouncementMapper">
+    <resultMap id="ProcurementAnnouncementMap" type="com.backend.pojo.ProcurementAnnouncement">
+        <id column="id" property="id"/>
+        <result column="title" property="title"/>
+        <result column="publisher" property="publisher"/>
+        <result column="contact" property="contact"/>
+        <result column="content" property="content"/>
+        <result column="publish_time" property="publishTime"/>
+        <result column="file_url" property="fileUrl"/>
+        <result column="announcement_type" property="announcementType"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+    </resultMap>
+
+    <select id="list" resultMap="ProcurementAnnouncementMap">
+        SELECT * FROM procurement_announcement
+        <where>
+            <if test="title != null and title != ''">
+                AND title LIKE CONCAT('%', #{title}, '%')
+            </if>
+            <if test="publisher != null and publisher != ''">
+                AND publisher LIKE CONCAT('%', #{publisher}, '%')
+            </if>
+            <if test="announcementType != null and announcementType != ''">
+                AND announcement_type = #{announcementType}
+            </if>
+            <if test="startTime != null">
+                AND publish_time >= #{startTime}
+            </if>
+            <if test="endTime != null">
+                AND publish_time &lt;= #{endTime}
+            </if>
+        </where>
+        ORDER BY create_time DESC
+    </select>
+
+    <select id="getById" resultMap="ProcurementAnnouncementMap">
+        SELECT * FROM procurement_announcement WHERE id = #{id}
+    </select>
+
+    <insert id="add">
+        INSERT INTO procurement_announcement(
+            title, publisher, contact, content, 
+            publish_time, file_url, announcement_type
+        ) VALUES(
+            #{title}, #{publisher}, #{contact}, #{content}, 
+            #{publishTime}, #{fileUrl}, #{announcementType}
+        )
+    </insert>
+
+    <update id="update">
+        UPDATE procurement_announcement
+        SET title = #{title},
+            publisher = #{publisher},
+            contact = #{contact},
+            content = #{content},
+            publish_time = #{publishTime},
+            file_url = #{fileUrl},
+            announcement_type = #{announcementType}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="delete">
+        DELETE FROM procurement_announcement WHERE id = #{id}
+    </delete>
+</mapper> 
