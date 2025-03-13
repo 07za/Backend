@@ -85,6 +85,10 @@ public class ProcurementAnnouncementServiceImpl implements ProcurementAnnounceme
             headerRow.createCell(4).setCellValue("采购内容");
             headerRow.createCell(5).setCellValue("发布时间");
             headerRow.createCell(6).setCellValue("公告类型");
+            headerRow.createCell(7).setCellValue("招标内容");
+            headerRow.createCell(8).setCellValue("报名状态");
+            headerRow.createCell(9).setCellValue("标的发布名称");
+            headerRow.createCell(10).setCellValue("投标结束时间");
             
             // 填充数据
             int rowNum = 1;
@@ -95,8 +99,12 @@ public class ProcurementAnnouncementServiceImpl implements ProcurementAnnounceme
                 row.createCell(2).setCellValue(announcement.getPublisher());
                 row.createCell(3).setCellValue(announcement.getContact());
                 row.createCell(4).setCellValue(announcement.getContent());
-                row.createCell(5).setCellValue(announcement.getPublishTime().toString());
+                row.createCell(5).setCellValue(announcement.getPublishTime() != null ? announcement.getPublishTime().toString() : "");
                 row.createCell(6).setCellValue(announcement.getAnnouncementType());
+                row.createCell(7).setCellValue(announcement.getBiddingContent());
+                row.createCell(8).setCellValue(announcement.getRegistrationStatus());
+                row.createCell(9).setCellValue(announcement.getBiddingName());
+                row.createCell(10).setCellValue(announcement.getBiddingEndTime() != null ? announcement.getBiddingEndTime().toString() : "");
             }
             
             // 保存文件

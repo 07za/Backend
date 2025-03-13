@@ -18,6 +18,13 @@ public class ProcurementAnnouncement {
     private String fileUrl;
     private String announcementType;
     
+    private String biddingContent;
+    private String registrationStatus;
+    private String biddingName;
+    
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date biddingEndTime;
+    
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createTime;
     

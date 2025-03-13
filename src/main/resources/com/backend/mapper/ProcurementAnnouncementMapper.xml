@@ -13,6 +13,10 @@
         <result column="publish_time" property="publishTime"/>
         <result column="file_url" property="fileUrl"/>
         <result column="announcement_type" property="announcementType"/>
+        <result column="bidding_content" property="biddingContent"/>
+        <result column="registration_status" property="registrationStatus"/>
+        <result column="bidding_name" property="biddingName"/>
+        <result column="bidding_end_time" property="biddingEndTime"/>
         <result column="create_time" property="createTime"/>
         <result column="update_time" property="updateTime"/>
     </resultMap>
@@ -29,11 +33,23 @@
             <if test="announcementType != null and announcementType != ''">
                 AND announcement_type = #{announcementType}
             </if>
+            <if test="registrationStatus != null and registrationStatus != ''">
+                AND registration_status = #{registrationStatus}
+            </if>
+            <if test="biddingName != null and biddingName != ''">
+                AND bidding_name LIKE CONCAT('%', #{biddingName}, '%')
+            </if>
             <if test="startTime != null">
                 AND publish_time >= #{startTime}
             </if>
             <if test="endTime != null">
                 AND publish_time &lt;= #{endTime}
+            </if>
+            <if test="biddingEndTimeStart != null">
+                AND bidding_end_time >= #{biddingEndTimeStart}
+            </if>
+            <if test="biddingEndTimeEnd != null">
+                AND bidding_end_time &lt;= #{biddingEndTimeEnd}
             </if>
         </where>
         ORDER BY create_time DESC
@@ -43,13 +59,15 @@
         SELECT * FROM procurement_announcement WHERE id = #{id}
     </select>
 
-    <insert id="add">
+    <insert id="add" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO procurement_announcement(
             title, publisher, contact, content, 
-            publish_time, file_url, announcement_type
+            publish_time, file_url, announcement_type,
+            bidding_content, registration_status, bidding_name, bidding_end_time
         ) VALUES(
             #{title}, #{publisher}, #{contact}, #{content}, 
-            #{publishTime}, #{fileUrl}, #{announcementType}
+            #{publishTime}, #{fileUrl}, #{announcementType},
+            #{biddingContent}, #{registrationStatus}, #{biddingName}, #{biddingEndTime}
         )
     </insert>
 
@@ -61,7 +79,11 @@
             content = #{content},
             publish_time = #{publishTime},
             file_url = #{fileUrl},
-            announcement_type = #{announcementType}
+            announcement_type = #{announcementType},
+            bidding_content = #{biddingContent},
+            registration_status = #{registrationStatus},
+            bidding_name = #{biddingName},
+            bidding_end_time = #{biddingEndTime}
         WHERE id = #{id}
     </update>
 
